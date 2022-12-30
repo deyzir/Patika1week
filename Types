@@ -1,0 +1,25 @@
+Code from video: https://solidity-by-example.org/primitives/ 
+
+Types
+
+Solidity is a statically typed language, which means that the type of each variable (state and local) needs to be specified. Solidity provides several elementary types which can be combined to form complex types.
+
+The concept of “undefined” or “null” values does not exist in Solidity, but newly declared variables always have a default value dependent on its type.
+
+Value Types
+
+bool: The possible values are constants true and false.
+
+Integers: Signed and unsigned integers of various sizes. Keywords uint8 to uint256 in steps of 8 (unsigned of 8 up to 256 bits) and int8 to int256. uint and int are aliases for uint256 and int256, respectively.
+
+int: It is the variable we use for numbers.
+
+uint: It is the variable we use for numbers.The difference from int is that negative numbers are not included.
+
+address: It is the variable where we keep the wallet addresses. Fixed size 20 bytes
+
+bytes32: It is a variable that holds string values as hexadecimal.
+
+You can find detailed further information from Solidity Official documentation (in English): https://docs.soliditylang.org/en/v0.8.15/types.html#value-types  
+
+You can find detailed further information from İTÜ Blockchain documentation (in Turkish): https://github.com/itublockchain/web3-bootcamp/blob/master/1x0_Variables/README.md
