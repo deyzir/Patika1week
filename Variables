@@ -15,8 +15,9 @@ Declared inside the function.
 
 Blockchain related variables.
 Following this tutorial will explain the details of these variable types.
-<br>
-```
+
+here is example codes;
+
 
 // SPDX-License-Identifier: GPL-3.0
 
@@ -32,4 +33,3 @@ contract variables{
      int public i=-12;//or 12 (we can use positive or negateive numbers)
      address public adrs= 0xb76c11313D91e99E92D3E36AD96B0f5D996a5d70;
 }
-```
