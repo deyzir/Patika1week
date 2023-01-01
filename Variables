@@ -15,21 +15,3 @@ Declared inside the function.
 
 Blockchain related variables.
 Following this tutorial will explain the details of these variable types.
-
-here is example codes;
-
-
-// SPDX-License-Identifier: GPL-3.0
-
-pragma solidity >=0.7.0 <0.9.0;
-
-contract variables{
-    //first of all what is the magic keywords for variables;
-    // uint,string,bool,address,int.....
-    uint public s = 12;//(we can only use positive numbers here)
-
-    string public a="My name is Sami";
-    bool public m= true;
-     int public i=-12;//or 12 (we can use positive or negateive numbers)
-     address public adrs= 0xb76c11313D91e99E92D3E36AD96B0f5D996a5d70;
-}
