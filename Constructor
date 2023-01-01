@@ -1,0 +1,55 @@
+I will explain (constructor) detail ;
+
+The constructor function is called only once, when a contract is first created, and cannot be called again.
+This is because the constructor is used to initialize the contract's state and set up any necessary resources,
+and these tasks should only be performed once at the beginning of the contract's lifetime.
+example multiple constuctor ;
+
+pragma solidity ^0.6.0;
+
+contract MultipleConstructors {
+    uint value;
+
+    constructor() public {
+        value = 0;
+    }
+
+    constructor(uint initialValue) public {
+        value = initialValue;
+    }
+}
+why is it important where we are using constructor ?
+
+The constructor function is important because it is used to initialize the contract's state and set up any necessary resources.
+This is the first thing that happens when a contract is created, and it is only performed once, at the beginning of the contract's lifetime.
+The constructor function is particularly useful for setting up the initial state of a contract and establishing any dependencies that the contract may have.
+For example, you might use the constructor to:
+
+*Set the initial values of state variables
+*Set up any external contracts that the current contract depends on
+*Set the contract owner or other privileged accounts
+*Initialize any mapping data structures that will be used by the contract
+*By using the constructor, you can ensure that the contract is properly initialized and ready to be used when it is deployed to the blockchain.
+If ı didnt use it?
+If you do not use a constructor function in your Solidity contract, the contract will still be created and deployed to the blockchain. However,
+the contract's state and resources will not be initialized, which could lead to issues later on.
+
+For example, if your contract has state variables that need to be set to specific initial values, and you do not set these values in a constructor,
+the state variables will be initialized to their default values (e.g. 0 for numeric types, false for bool, and the empty string for string). 
+This could cause problems if your contract's code assumes that the state variables have been initialized to specific values.
+
+In addition, if your contract depends on other contracts or external resources, and you do not set these dependencies up in a constructor,
+the contract may not function correctly or may throw errors when it tries to access these dependencies.
+
+Therefore, it is generally recommended to use a constructor function in your contracts to ensure that
+
+the contract's state and resources are properly initialized and ready to be used.
+
+
+
+
+
+
+
+
+
