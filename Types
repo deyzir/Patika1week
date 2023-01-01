@@ -43,4 +43,24 @@ contract variables{
      int public i=-12;//or 12 (we can use positive or negateive numbers)
      address public adrs= 0xb76c11313D91e99E92D3E36AD96B0f5D996a5d70;
 }
+Tests ;
+
+1 - Which of the following is a data type that only holds positive integer values?
+
+
+2 - Which of the following data types can only take 2 different values?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
