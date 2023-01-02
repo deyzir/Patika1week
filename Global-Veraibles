@@ -1,0 +1,44 @@
+ what is Global_Veriables in solidity smart contracts?
+ 
+Global variables are variables that are defined outside of any function or contract. 
+These variables are accessible from any contract or function within the same contract file. 
+
+level 1 example;
+
+// SPDX-License-Identifier: GPL-3.0
+
+pragma solidity >=0.7.0 <0.9.0;
+
+contract GlobalVeriables{
+    function GlobalVar() external view returns(address , uint ,uint){
+        address adres = msg.sender;
+        uint bloctimestamp = block.timestamp;
+        uint blocknumber = block.number;
+        return(adres,blocknumber,bloctimestamp);
+    }
+}
+
+
+level 2 example ;
+
+// SPDX-License-Identifier: GPL-3.0
+
+pragma solidity >=0.7.0 <0.9.0;
+
+contract Example {
+    address public owner;
+
+    constructor() public {
+        owner = msg.sender;
+    }
+
+    function updateTimestamp() public {
+        // update a timestamp value in storage
+        uint256 currentTimestamp = block.timestamp;
+    }
+
+    function updateBlockNumber() public {
+        // update a block number value in storage
+        uint256 currentBlockNumber = block.number;
+    }
+}
