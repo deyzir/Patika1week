@@ -1,0 +1,115 @@
+Hhat is enum ?
+
+An enum (enumeration) is a custom data type that consists of a set of named values. 
+
+It can be used to define a type with a fixed set of named values,
+
+which can make code more readable and easier to understand.
+
+
+
+why we should  `enum`?
+
+Enums (enumerations) are a way to define a type with a fixed set of named values in Solidity. 
+They can be used when a variable or function parameter needs to take on one of a limited set of possible values.
+
+
+If we dont use it?
+If you do not use an enum type and instead use integers or other values to represent a fixed set of named values,
+your code may be less readable and harder to understand. It can also be more prone to errors if the meaning of the values is not immediately clear.
+####
+Example code not with enum;
+
+
+// SPDX-License-Identifier: GPL-3.0
+
+pragma solidity >=0.7.0 <0.9.0;
+
+contract TaskManager {
+    // a struct to represent a task
+    struct Task {
+        bytes32 name;
+        uint8 status;
+    }
+
+    // an array of tasks
+    Task[] public tasks;
+
+    // a function to add a new task
+    function addTask(bytes32 _name) public {
+        // create a new task and set its status to 0 (Pending)
+        tasks.push(Task(_name, 0));
+    }
+}
+
+Example code with enum;
+
+// SPDX-License-Identifier: GPL-3.0
+
+pragma solidity >=0.7.0 <0.9.0;
+
+contract TaskManager {
+    // define an enum type with three possible values
+    enum TaskStatus { Pending, InProgress, Complete }
+
+    // a struct to represent a task
+    struct Task {
+        bytes32 name;
+        TaskStatus status;
+    }
+
+    // an array of tasks
+    Task[] public tasks;
+
+    // a function to add a new task
+    function addTask(bytes32 _name) public {
+        // create a new task and set its status to Pending
+        tasks.push(Task(_name, TaskStatus.Pending));
+    }
+}
+
+In this version of the code, the meaning of the possible values for the status field is clear and the code is easier to understand.
+
+####
+
+
+// SPDX-License-Identifier: GPL-3.0
+
+pragma solidity >=0.7.0 <0.9.0;
+
+contract enums{
+     enum Status{
+        Completed,
+        Rejected,
+        Shipped
+        
+
+    }
+
+    Status public status;
+
+    struct Order{
+        address buyer;
+        Status status;
+    }
+    Order[] public orders;
+
+
+
+    function get()  view external returns(Status ){
+        return status;
+
+    }
+
+    function set(Status _status) external{
+            status = _status;
+    }
+
+    function ship()external {
+        status = Status.Shipped;
+
+
+    }
+
+
+}
