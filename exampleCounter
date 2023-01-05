@@ -1,1 +1,19 @@
 
+// basic counter,it will improve  :)
+
+// SPDX-License-Identifier: GPL-3.0
+
+pragma solidity >=0.7.0 <0.9.0;
+
+ 
+contract counter{
+    int public counters;
+
+    function inc() external{
+        counters -=1;
+    }
+    function dec() external{
+        counters +=1;
+    }
+} 
+
