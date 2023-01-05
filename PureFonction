@@ -1,1 +1,18 @@
 
+a function can be marked as "pure" to indicate that it does not modify the contract's state 
+and only relies on its input arguments and return value. A pure function is also not allowed 
+to perform any external calls (e.g. to another contract or to an external API), and must return the same result for the same input arguments.
+
+Pure functions are useful for performing calculations or other operations that do not depend 
+on the contract's state or external factors, and can be used to optimize the contract's performance 
+by allowing the Ethereum Virtual Machine (EVM) to cache the results of the function.
+
+// SPDX-License-Identifier: GPL-3.0
+
+pragma solidity >=0.7.0 <0.9.0;
+
+
+function add(int x, int y) public pure returns (int z) {
+    z = x + y;
+    return z;
+}
