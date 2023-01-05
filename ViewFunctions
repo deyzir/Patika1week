@@ -1,1 +1,18 @@
+what is view fonction
 
+a function can be marked as "view" to indicate that it does not modify 
+the contract's state and does not perform any external calls (e.g. to another contract or to an external API). 
+A view function can only read the contract's state and return a value based on that state, and cannot modify the state in any way.
+
+View functions are useful for providing read-only access to the contract's state,
+and can be used to optimize the contract's performance by allowing the Ethereum Virtual Machine (EVM) to cache the results of the function.
+
+// SPDX-License-Identifier: GPL-3.0
+
+pragma solidity >=0.7.0 <0.9.0;
+
+
+function getTotalSupply() public view returns (uint totalSupply) {
+    totalSupply = _totalSupply;
+    return totalSupply;
+}
