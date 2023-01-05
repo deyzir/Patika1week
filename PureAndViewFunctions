@@ -1,1 +1,40 @@
 
+what is different PureAndView Fonctions ?
+
+
+// SPDX-License-Identifier: GPL-3.0
+
+pragma solidity >=0.7.0 <0.9.0;
+
+
+contract pr_vw{
+
+    // first of all what is pure function;
+
+    //In Solidity, a "pure" function is a function that does not modify the state of the contract and does not interact with any external resources (such as other contracts or external web services).
+    // a pure function that calculates the number of years given a number of days
+
+    // first of all what is view function;
+    // a "view" function is a function that does not modify the state of the contract 
+    // and does not interact with any external resources (such as other contracts or external web services).
+    // View functions are marked with the view keyword and are used to retrieve information from the contract's state 
+    // or perform calculations based on the contract's state.
+    // a view function that retrieves the number of years in the totalDays value
+    // a pure function that calculates the number of years given a number of days
+
+
+
+
+    uint256 public constant DAYS_IN_YEAR = 365;
+
+
+    function daysToYears(uint256 _days) pure public returns (uint256) {
+        return _days / DAYS_IN_YEAR;
+    }
+    
+    uint public constant  yearhs = 365;
+      function daysToYearsf(uint256 _days) pure public returns (uint256) {
+        return _days / yearhs;
+    }
+
+}
