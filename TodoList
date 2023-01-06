@@ -1,0 +1,34 @@
+// SPDX-License-Identifier: GPL-3.0
+
+pragma solidity >=0.7.0 <0.9.0;
+
+contract todolist{
+    struct todo{
+        string text;
+        bool comploted;
+    }
+
+    todo[] public todos;
+
+
+    function create(string calldata _text ) external {
+        todos.push(todo({
+
+            text: _text,
+            comploted  : false
+        }));
+
+    }
+
+    function update( uint index ,string calldata _text)external{
+        todos[index].text = _text;
+    }
+    function get(uint _index )external view returns(string memory ,bool){
+        todo memory todoss = todos[_index];
+        return(todoss.text ,todoss.comploted);
+    }
+
+    function toggle(uint _index) external{
+        todos[_index].comploted = !todos[_index].comploted;
+    } 
+}
