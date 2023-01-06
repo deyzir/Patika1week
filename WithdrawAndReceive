@@ -2,11 +2,12 @@
 
 pragma solidity >=0.7.0 <0.9.0;
 
+
 contract withdrawAndReceive{
-    address public owner;
-    uint public balance;
+    address public owner; // here we have to use owner keyword because only owner call here 
+    uint public balance; 
     constructor(){
-        owner = msg.sender;
+        owner = msg.sender; // constructor only once call when to deploy the contract  
     }
     function recive() payable external{
         balance += msg.value;
