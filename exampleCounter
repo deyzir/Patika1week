@@ -7,10 +7,10 @@ pragma solidity >=0.7.0 <0.9.0;
 
  
 contract counter{
-    int public counters;
-
+    int public counters; // burda int ile uint farkını bilirsek neden int kullandığım anlaşılır :)
+ 
     function inc() external{
-        counters -=1;
+        counters -=1; 
     }
     function dec() external{
         counters +=1;
