@@ -1,0 +1,21 @@
+// SPDX-License-Identifier: GPL-3.0
+
+pragma solidity >=0.7.0 <0.9.0;
+
+contract withdrawAndReceive{
+    address public owner;
+    uint public balance;
+    constructor(){
+        owner = msg.sender;
+    }
+    function recive() payable external{
+        balance += msg.value;
+    }
+    function withdraw( uint amount , address payable enter_address) public {
+        require(msg.sender  == owner, "you are not owner");
+        require(amount<= balance,"you dont have enaugh money , fakir :)");
+        enter_address.transfer(amount);
+        balance-=  amount;
+
+    }
+}
