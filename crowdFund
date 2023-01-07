@@ -1,32 +1,43 @@
 // SPDX-License-Identifier: GPL-3.0
- 
 
-pragma solidity >=0.7.0 
+pragma solidity >=0.7.0 <0.9.0;
 
-import "./IERC20.sol";
+//import "./IERC20.sol";
 
-contract crowdFund{
+import "https://github.com/OpenZeppelin/openzeppelin-solidity/contracts/token/ERC20/IERC20.sol";
+
+contract CrowdFund{
     event Launch(
         uint id,
         address indexed creator,
-        uint32 startAt,
-        uint32 endAt,
-        uint goal
+        uint goal,
+         uint32 startAt,
+        uint32 endAt
+    );
 
-    )
-    struct Campaign{
+    event Cancel (uint id);
+    event Pladge (uint id,address indexed sender,uint amount);
+    event Unpladge(uint id,address indexed sender,uint amount);
+    event Claim(uint id); // burda hata varmıs
+    event Refund(uint indexed id,address indexed , uint amount );
+
+
+    struct Campaign {
+        address creator;
+        uint goal;
+        uint pladged;
         uint32 startAt;
         uint32 endAt;
-        uint goal;
-        address creator;
         bool claimed;
-        uint pladget;
+
 
 
     }
-    ERC20 public immutable token;
-    mapping(address => uint) public campaigns;
-    mapping(uint(mapping(address =>uint)))  public pladgetAmount;
+
+    IERC20 public immutable token;
+    uint public count;
+    mapping(uint => Campaign) public campaigns; //burda  hata varmış
+    mapping(uint=>mapping(address =>uint))  public pladgedAmount;
 
 
 
@@ -39,26 +50,76 @@ contract crowdFund{
         uint32 _startAt,
         uint32 _endAt,
         uint _goal)external {
-            require(_startAt >= block.bloctimestamp,"daha başlamadı - didnt it start yet ");
-            require(endAt >= block.blocktimestamp,"daha bitmedi - didnt it end yet ");
-            require(endAt <= block.blocktimestamp + 90 days,"endAt < max duration");
+            require(_startAt >= block.timestamp, "daha baslamadi  didnt it start yet ");
+            require(_endAt >= _startAt,"daha bitmedi - didnt it end yet ");
+            require(_endAt <= block.timestamp + 90 days,"endAt < max duration");
 
             count +=1;
-            campaign[count] = Campaign({
+
+            campaigns[count] = Campaign({
                 creator : msg.sender,
                 goal : _goal,
-                pladget : 0,
+                pladged : 0,
                 startAt : _startAt,
                 endAt:_endAt,
                 claimed:false
             });
-            emit Launch (count,msg.sender,_goal,startAt,endAt)
+            emit Launch(count,msg.sender,_goal,_startAt,_endAt);
 
     }
-    function cancel(uint id) external{}
-    function pladge(uint id,uint _amount)external{}
-    function unpladge(uint id,uint _amount)external{}
-    function claimed(uint id)external{}
-    function refund(uint id)external{}
+    function cancel(uint _id) external{
+        Campaign memory campaign = campaigns[_id];
+        require(msg.sender== campaign.creator,"you dont creator");
+        require(block.timestamp < campaign.startAt,"started");
+        delete campaigns[_id];
+
+        emit Cancel(_id);
+
+       
+    }
+    function pladge(uint _id,uint _amount)external{
+        Campaign storage campaign = campaigns[_id];
+        require(block.timestamp >= campaign.startAt, "started");
+        require(block.timestamp <= campaign.endAt,"ended");
+        campaign.pladged += _amount;
+        pladgedAmount[_id][msg.sender] += _amount;
+        token.transferFrom(msg.sender, address(this),_amount);
+        emit Pladge(_id,msg.sender,_amount);
+
+    }
+    function unpladge(uint _id,uint _amount)external{
+        Campaign storage campaign = campaigns[_id];
+        require(block.timestamp <= campaign.startAt,"started");
+
+        campaign.pladged -= _amount; // hata burda  campaign.unppladge -= _amount; 
+        token.transfer(msg.sender,_amount);
+        emit Unpladge(_id,msg.sender,_amount);
+
+    }
+    function claimed(uint _id)external{
+        Campaign storage campaign = campaigns[_id];
+        //bunu sadece creator yapacak ,başlamışmı kotrol edilecek , bitmişmi hedefe ayarla,claim edilmişmi
+        require(msg.sender == campaign.creator,"dont have access");
+        require(block.timestamp < campaign.startAt,"dont started");
+        require(campaign.pladged >= campaign.goal," ended< goal");
+        require(!campaign.claimed,"claimed");
+        campaign.claimed = true;
+        token.transfer(msg.sender,campaign.pladged);
+        emit Claim(_id);
+
+    }
+
+    function refund(uint _id)external{
+        Campaign storage campaign = campaigns[_id];
+        require(block.timestamp > campaign.startAt,"dont started");
+        require(campaign.pladged< campaign.goal," ended< goal");
+
+        uint bal = pladgedAmount[_id][msg.sender];
+        pladgedAmount[_id] [msg.sender] = 0;
+        token.transfer(msg.sender,bal);
+        emit Refund(_id , msg.sender,bal);
+
+
+    }
 
 }
