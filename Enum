@@ -1,22 +1,22 @@
-Hhat is enum ?
+//Hhat is enum ?
 
-An enum (enumeration) is a custom data type that consists of a set of named values. 
+//An enum (enumeration) is a custom data type that consists of a set of named values. 
 
-It can be used to define a type with a fixed set of named values,
+//It can be used to define a type with a fixed set of named values,
 
-which can make code more readable and easier to understand.
-
-
-
-why we should  `enum`?
-
-Enums (enumerations) are a way to define a type with a fixed set of named values in Solidity. 
-They can be used when a variable or function parameter needs to take on one of a limited set of possible values.
+//which can make code more readable and easier to understand.
 
 
-If we dont use it?
-If you do not use an enum type and instead use integers or other values to represent a fixed set of named values,
-your code may be less readable and harder to understand. It can also be more prone to errors if the meaning of the values is not immediately clear.
+
+//why we should  `enum`?
+//
+//Enums (enumerations) are a way to define a type with a fixed set of named values in Solidity. 
+//They can be used when a variable or function parameter needs to take on one of a limited set of possible values.
+
+
+//If we dont use it?
+//If you do not use an enum type and instead use integers or other values to represent a fixed set of named values,
+//your code may be less readable and harder to understand. It can also be more prone to errors if the meaning of the values is not immediately clear.
 ####
 Example code not with enum;
 
@@ -68,7 +68,7 @@ contract TaskManager {
     }
 }
 
-In this version of the code, the meaning of the possible values for the status field is clear and the code is easier to understand.
+//In this version of the code, the meaning of the possible values for the status field is clear and the code is easier to understand.
 
 ####
 
