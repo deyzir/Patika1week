@@ -1,10 +1,10 @@
-what is founctions?
+//what is founctions?
  
- A function is a block of code that performs a specific task and may return a result. 
- Functions can take zero or more input arguments and may or may not return a value. 
- Functions can be either internal, meaning they can only be called within the contract, 
- or external, meaning they can be called by other contracts or by external users via transactions.
- Functions can also be marked as "view" or "pure", which have special properties related to how they can access and modify the contract's state.
+ //A function is a block of code that performs a specific task and may return a result. 
+ //Functions can take zero or more input arguments and may or may not return a value. 
+ //Functions can be either internal, meaning they can only be called within the contract, 
+ //or external, meaning they can be called by other contracts or by external users via transactions.
+ //Functions can also be marked as "view" or "pure", which have special properties related to how they can access and modify the contract's state.
 
 
 example code 
