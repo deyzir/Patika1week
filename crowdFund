@@ -1,0 +1,52 @@
+// SPDX-License-Identifier: GPL-3.0
+ 
+
+pragma solidity >=0.7.0 
+
+import "./IERC20.sol";
+
+contract crowdFund{
+    event Launch()
+    struct Campaign{
+        uint32 startAt;
+        uint32 endAt;
+        uint goal;
+        address creator;
+        bool claimed;
+        uint pladget;
+
+
+    }
+    ERC20 public immutable token;
+    mapping(address => uint) public campaigns;
+    mapping(uint(mapping(address =>uint)))  public pladgetAmount;
+
+
+
+    constructor(address _token) {
+        token = IERC20(_token);
+
+    }
+
+    function lunch(
+        uint32 _startAt,
+        uint32 _endAt,
+        uint _goal)external {
+            require(_startAt >= block.bloctimestamp,"daha başlamadı - didnt it start yet ");
+            require(endAt >= block.blocktimestamp,"daha bitmedi - didnt it end yet ");
+            require(endAt <= block.blocktimestamp + 90 days,"endAt < max duration");
+
+            count +=1;
+            campaign[count] = Campaign({
+                creator : msg.sender,
+                goal : _goal,
+                pladget : 0,
+                startAt : _startAt,
+                endAt:_endAt,
+                claimed:false
+            });
+            emit Launch (count,msg.sender,_goal,startAt,endAt)
+
+    }
+
+}
