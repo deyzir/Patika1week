@@ -6,7 +6,14 @@ pragma solidity >=0.7.0
 import "./IERC20.sol";
 
 contract crowdFund{
-    event Launch()
+    event Launch(
+        uint id,
+        address indexed creator,
+        uint32 startAt,
+        uint32 endAt,
+        uint goal
+
+    )
     struct Campaign{
         uint32 startAt;
         uint32 endAt;
@@ -48,5 +55,10 @@ contract crowdFund{
             emit Launch (count,msg.sender,_goal,startAt,endAt)
 
     }
+    function cancel(uint id) external{}
+    function pladge(uint id,uint _amount)external{}
+    function unpladge(uint id,uint _amount)external{}
+    function claimed(uint id)external{}
+    function refund(uint id)external{}
 
 }
