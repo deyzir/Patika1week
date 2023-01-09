@@ -1,7 +1,7 @@
-a local variable is a variable that is defined within a function and is only accessible within that function.
-Local variables are used to store temporary values that are needed while a function is executing,
-and they are destroyed when the function finishes executing.
-here in example codes;
+//a local variable is a variable that is defined within a function and is only accessible within that function.
+//Local variables are used to store temporary values that are needed while a function is executing,
+//and they are destroyed when the function finishes executing.
+//here in example codes;
 
 // SPDX-License-Identifier: GPL-3.0
 
