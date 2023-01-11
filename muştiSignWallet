@@ -1,0 +1,109 @@
+// SPDX-License-Identifier: GPL-3.0
+
+pragma solidity >=0.7.0 <0.9.0;
+
+contract multisign{
+    // aplication ,revoke, submit,approve,executed
+
+
+    event Deposit( address indexed _sender,uint amount);
+    event Submit(uint indexed txtId);
+    event Approve(address indexed owner,uint indexed txtId);
+    event Revoke(address indexed ower,uint indexed txtId);
+    event Executed(uint indexed txtId);
+    
+
+
+    struct Transaction{
+        // to ,value,data,executed
+        address to;
+        uint value;
+        bytes data;
+        bool executed;
+    }
+
+address[] public owners;
+mapping(address => bool) public isOwner;
+uint public required;
+Transaction[] public transactions;
+mapping(uint => mapping(address => bool)) public approved;
+
+modifier onlyOwner(){
+    require(isOwner[msg.sender],"not owner");
+    _;
+
+}
+
+// bir modifier ile txtId varmı kontrolu ediliceek 
+
+modifier txtID(uint _txtId){
+    require (_txtId < transactions.length,"already exists");
+    _;
+}
+
+
+// nir modifier ile izin verilmişmi verilmemiş mi kontrol edilicek msgsender i eklemeyi de unutma :)
+modifier notApproved(uint _txtId  ) {
+    require (!approved[_txtId] [msg.sender],"elready approved ");
+    _;
+} 
+
+
+// not executed ile txt transaction edilmişmmi  executed i tanımla :)
+
+modifier notexecuted(uint _txtId){
+    require(!transactions[_txtId].executed , "already executed ");
+    _;
+
+}
+
+
+
+
+// create a constructor and it have a string memory _owners uint _required 
+// require 
+
+constructor(address[] memory _owners, uint _required){
+    require(_owners.length > 0 ,"owners required");
+    require(_required >0 && _required <=_owners.length,"invalid required number of owners");
+    // bir dongü oluşturucaz değer atadığımız i yi _owners.length den kuçukse  i++ artırıcaz
+    // burda  owner adında  yeni bir address oluşturup bunu. da _owners[i] ataman lazım
+    // burda require ile owner != address(0),"invalid"
+    // burda ise require(!isOwner[owner],"değil");
+
+    for(uint i; i< _owners.length;++i){
+
+    
+    address owner = _owners[i];// neden owner olarak bir address tanımladık sebebi  _owner içerisindekı i ye ulaşabilmek için 
+
+    require(owner != address(0),"invalid owner");
+    require( !isOwner[owner] , "owner is not uniqe ");
+    isOwner[owner] = true;
+    owners.push(owner);
+
+
+
+    }
+    required = _required;
+
+    }
+
+    receive() external payable{
+        emit Deposit(msg.sender, msg.value);
+
+    }
+    function submit(address _to, uint _value,bytes calldata _data)
+    external onlyOwner{
+        transactions.push(Transaction({
+            to: _to,
+            value: _value,
+            data: _data,
+
+            executed:false
+        }));
+        emit Submit(transactions.length -1);
+
+
+    }
+
+}
