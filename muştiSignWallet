@@ -36,7 +36,7 @@ modifier onlyOwner(){
 
 // bir modifier ile txtId varmı kontrolu ediliceek 
 
-modifier txtID(uint _txtId){
+modifier txtExists(uint _txtId){
     require (_txtId < transactions.length,"already exists");
     _;
 }
@@ -51,7 +51,7 @@ modifier notApproved(uint _txtId  ) {
 
 // not executed ile txt transaction edilmişmmi  executed i tanımla :)
 
-modifier notexecuted(uint _txtId){
+modifier notExecuted(uint _txtId){
     require(!transactions[_txtId].executed , "already executed ");
     _;
 
@@ -105,5 +105,50 @@ constructor(address[] memory _owners, uint _required){
 
 
     }
+    function approve(uint _txtId) external onlyOwner notExecuted(_txtId) notExecuted(_txtId) txtExists(_txtId){
+        approved[_txtId][msg.sender] = true;
+
+        emit Approve(msg.sender ,_txtId);
+
+
+    } 
+
+    // ### kodu yazmadan önce yurumluyorum ###
+// get approved isminde bir private fonksiyon oluştur sonrasında uint bir değer donecek olan count u tanımla sonrasında for ile bir döngü yaz ve her bir i nin 
+// küçük olması durumunda owners in uzunluğu kadar i artır ve bir şart koy eğer approvad dan _txt ve owners i sinden ise countu bir artır
+    function _getApprovelCount(uint _txtId) private view returns(uint count){
+        for(uint i; i<owners.length; i++){
+            if(approved[_txtId] [owners[i]]){
+                count +=1;
+            }
+        }
+    }
+// burda yeni bir fonksiyoon uluşturucanksın ismi execute txtId alıcak external olup notapproved ile excetured txtıd si alıcak 
+//require ile getapprovecount u alıp buyuk eşit olması required ile eşle aprovals < required 
+// stateddekı Transaction alıp alırken storge yazmayı unutma eşitle transactions[-txtıd]
+// (bool success,) =  transaction to call{value : transaction.value ](transaction data )  
+// transaction.executed true
+//  require(success , "trnsctn failed")
+// emit exectured(_txtıd)
+function execute(uint _txtId) external  txtExists(_txtId) notExecuted(_txtId){
+    require(_getApprovelCount(_txtId) >= required ,"_getApprovelCount <required");
+    Transaction storage transaction = transactions[_txtId];
+    (bool success, ) =  transaction.to.call{value: transaction.value} (transaction.data);
+    require( success , "txt failed");
+
+    transaction.executed = true;
+    emit Executed( _txtId);
+
+
+} 
+// son fonksiyonumuz revoke isminde execute ile  aynı parametreleri alır. 
+//require ile approved edilmişmi sorgula
+// approved i false yap çünkü fonksiyon revoke :)
+//emit Revoke () 
+function revoke(uint _txtId ) external onlyOwner notExecuted(_txtId) txtExists(_txtId){
+    require(approved[_txtId] [msg.sender] ,"doesnt approved");
+    approved[_txtId] [msg.sender] = false;
+    emit Revoke(msg.sender,_txtId);
+}
 
 }
