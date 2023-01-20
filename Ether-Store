@@ -1,0 +1,24 @@
+// SPDX-License-Identifier: MIT
+
+pragma solidity ^0.8.7;
+
+contract RWO{
+// owner address //0xb76c11313D91e99E92D3E36AD96B0f5D996a5d70 
+address public owner;
+//balance = 0.5 ethereum
+uint public balance; //
+
+constructor(){
+    owner = msg.sender; //this only once run when this contract deployed.
+}
+receive() external payable{
+    balance += msg.value;
+}
+    function withdraw(uint256 amount, address payable sedtrr ) public{
+        require( owner==msg.sender, "only owner call this function");//owner mi?
+        require(amount <= balance,"your amount is not enough");//amount yeterli mi
+        sedtrr.transfer(amount);
+        balance -= amount;
+    } 
+
+} 
